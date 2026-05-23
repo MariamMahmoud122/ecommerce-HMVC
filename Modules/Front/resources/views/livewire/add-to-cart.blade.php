@@ -1,0 +1,1 @@
+<button wire:click="add" class="btn btn-danger">ADD TO CART</button>

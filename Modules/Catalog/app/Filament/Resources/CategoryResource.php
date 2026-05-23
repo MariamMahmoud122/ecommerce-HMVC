@@ -1,0 +1,125 @@
+<?php
+
+namespace Modules\Catalog\app\Filament\Resources;
+
+use Modules\Catalog\app\Filament\Resources\CategoryResource\Pages;
+use Modules\Catalog\app\Models\Category;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+// الاستدعاءات المهمة عشان الأخطاء تختفي
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Resources\Concerns\Translatable;
+class CategoryResource extends Resource
+{
+    use Translatable;
+    protected static ?string $model = Category::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+
+    protected static ?string $navigationLabel = 'Categories';
+    protected static ?string $modelLabel = 'Category';
+    protected static ?string $pluralModelLabel = 'Categories';
+
+
+   
+    protected static ?string $category_information = null;
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make(__('filament/admin/category_resource.category_information'))
+                    ->description('Manage your clothing categories (Women, Men, Kids)')
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(__('filament/admin/category_resource.name'))
+                            ->required()
+                            ->placeholder('e.g. Women Wear')
+                            ->maxLength(255),
+
+                        FileUpload::make('image')
+                            ->label(__('filament/admin/category_resource.image'))
+                            ->image()
+                            ->directory('categories'),
+
+                        Textarea::make('description')
+                            ->label(__('filament/admin/category_resource.description'))
+                            ->placeholder('Describe this category...')
+                            ->columnSpanFull(),
+                    ])->columns(2),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('image')
+                    ->label(__('filament/admin/category_resource.image'))
+                    ->circular(),
+                
+                TextColumn::make('name')
+                    ->label(__('filament/admin/category_resource.name'))
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('created_at')
+                    ->label(__('filament/admin/category_resource.created_at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
+        ];
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/admin/category_resource.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/admin/category_resource.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/admin/category_resource.plural_model_label');
+    }
+
+}
