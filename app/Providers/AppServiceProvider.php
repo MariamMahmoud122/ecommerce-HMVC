@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
 use Filament\SpatieLaravelTranslatablePlugin;
-
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
       Paginator::useBootstrapFive();
-    
+     LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch->locales(['ar', 'en']); // اللغات اللي عاوزاها تظهر
+        });
     }
 }

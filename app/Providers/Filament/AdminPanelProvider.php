@@ -43,13 +43,7 @@ class AdminPanelProvider extends PanelProvider
            ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn (): string => Blade::render('
-                <div style="display:flex; gap:15px">
-
-            <a href="/lang/ar">🇪🇬 عربي</a>
-
-            <a href="/lang/en">🇺🇸 English</a>
-
-        </div>
+               
                     <style>
                         .fi-logo {
                             height: 4rem !important;
