@@ -4,15 +4,13 @@ namespace Modules\Catalog\app\Models; // ضيفنا كلمة app هنا عشان
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Spatie\Translatable\HasTranslations;
 class Category extends Model
 {
     use HasFactory;
+use HasTranslations;
 
-
-    /**
-     * لازم تملي الـ fillable عشان تقدري تحفظي بيانات القسم
-     */
+   public $translatable = ['name'];
     protected $fillable = [
         'name',
         'slug',

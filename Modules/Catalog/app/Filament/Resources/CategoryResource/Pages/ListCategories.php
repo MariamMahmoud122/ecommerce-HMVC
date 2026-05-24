@@ -11,7 +11,10 @@ class ListCategories extends ListRecords
 {
     use Translatable;
     protected static string $resource = CategoryResource::class;
-
+public static function getResource(): string
+    {
+        return CategoryResource::class;
+    }
     protected function getHeaderActions(): array
     {
         return [

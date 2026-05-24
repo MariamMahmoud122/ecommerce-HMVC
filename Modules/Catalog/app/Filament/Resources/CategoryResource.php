@@ -2,35 +2,39 @@
 
 namespace Modules\Catalog\app\Filament\Resources;
 
-use Modules\Catalog\app\Filament\Resources\CategoryResource\Pages;
 use Modules\Catalog\app\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-// الاستدعاءات المهمة عشان الأخطاء تختفي
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Resources\Concerns\Translatable;
+
 class CategoryResource extends Resource
 {
-    use Translatable;
-    protected static ?string $model = Category::class;
+    // ❌ شيلنا الـ use Translatable من هنا لتفادي مشكلة الـ Absolute URI الغلسة
 
+    protected static ?string $model = Category::class;
+    protected static ?string $slug = 'catalog/categories';
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
+    // 🚀 البديل السحري والآمن للترجمة جوه موديولات الـ HMVC
+    public static function getTranslatableLocales(): array
+    {
+        return ['ar', 'en', 'el'];
+    }
 
-    protected static ?string $navigationLabel = 'Categories';
-    protected static ?string $modelLabel = 'Category';
-    protected static ?string $pluralModelLabel = 'Categories';
 
-
-   
+public static function getDefaultTranslatableLocale(): string
+{
+    return 'ar'; // أو 'en' حسب اللغة الأساسية للوحتك
+}
+    
     protected static ?string $category_information = null;
 
     public static function form(Form $form): Form
@@ -94,19 +98,19 @@ class CategoryResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
+    // 🚀 كتابة الـ Namespaces كاملة ومباشرة لصفحات الـ Module عشان نمنع الـ الـ Uri Conflict تماماً
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => \Modules\Catalog\app\Filament\Resources\CategoryResource\Pages\ListCategories::route('/'),
+            'create' => \Modules\Catalog\app\Filament\Resources\CategoryResource\Pages\CreateCategory::route('/create'),
+            'edit' => \Modules\Catalog\app\Filament\Resources\CategoryResource\Pages\EditCategory::route('/{record}/edit'),
         ];
     }
+
     public static function getNavigationLabel(): string
     {
         return __('filament/admin/category_resource.navigation_label');
@@ -121,5 +125,4 @@ class CategoryResource extends Resource
     {
         return __('filament/admin/category_resource.plural_model_label');
     }
-
 }

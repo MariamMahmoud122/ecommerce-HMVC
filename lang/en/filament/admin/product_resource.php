@@ -1,22 +1,25 @@
 <?php
 
 return [
-
-    'category' => 'Category',
-    'category.name' => 'Name',
-    'category_id' => 'Category',
-    'description' => 'Description',
-    'image' => 'Image',
-    'is_visible' => 'Is Visible',
     'model_label' => 'Product',
-    'name' => 'Name',
-    'navigation_label' => 'Products',
     'plural_model_label' => 'Products',
-    'price' => 'Price',
-    'price&_inventory' => 'Price & Inventory',
-    'product_image' => 'Product Image',
-    'product_information' => 'Product Information',
+    'navigation_label' => 'Products',
+    
+    // الخانات والـ Columns
+    'id' => 'ID',
+    'name' => 'Name',
     'slug' => 'Slug',
+    'description' => 'Description',
+    'price' => 'Price',
     'stock' => 'Stock',
-
+    'image' => 'Image',
+    'product_image' => 'Product Image',
+    'is_visible' => 'Is Visible',
+    'category_id' => 'Category',
+    'category' => 'Category',
+    'category.name' => 'Category Name',
+    
+    // المجموعات والـ Sections (عدلنا الـ Key هنا)
+    'product_information' => 'Product Information',
+    'price_and_inventory' => 'Price & Inventory',
 ];

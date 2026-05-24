@@ -1,21 +1,21 @@
 <?php
 
 return [
-
-    'created_at' => 'Created',
-    'id' => 'Id',
-    'items' => 'Items',
     'model_label' => 'Order',
-    'navigation_label' => 'Orders',
-    'order_information' => 'Order Information',
-    'order_items' => 'Order Items',
     'plural_model_label' => 'Orders',
-    'price' => 'Price',
-    'product_id' => 'Product',
-    'quantity' => 'Quantity',
+    'navigation_label' => 'Orders',
+    
+    // الخانات (Fields)
+    'id' => 'Order ID',
+    'user_id' => 'Customer',
+    'user.name' => 'Customer Name',
     'status' => 'Status',
     'total_price' => 'Total Price',
-    'user.name' => 'Name',
-    'user_id' => 'User',
-
+    'created_at' => 'Order Date',
+    
+    // تفاصيل محتويات الأوردر (Order Items)
+    'items' => 'Order Items',
+    'product_id' => 'Product',
+    'quantity' => 'Quantity',
+    'price' => 'Unit Price',
 ];

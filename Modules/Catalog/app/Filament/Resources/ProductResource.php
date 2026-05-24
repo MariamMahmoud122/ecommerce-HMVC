@@ -2,7 +2,6 @@
 
 namespace Modules\Catalog\app\Filament\Resources;
 
-use Modules\Catalog\app\Filament\Resources\ProductResource\Pages;
 use Modules\Catalog\app\Models\Product; 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,17 +9,15 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Resources\Concerns\Translatable;
 
 class ProductResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Product::class;
     
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
-
-  
-    protected static ?string $navigationLabel = 'Products';
-    protected static ?string $modelLabel = 'Product';
-    protected static ?string $pluralModelLabel = 'Products';
 
     public static function form(Form $form): Form
     {
@@ -69,18 +66,17 @@ class ProductResource extends Resource
                     ])->columns(3),
 
                 Forms\Components\Section::make(__('filament/admin/product_resource.product_image'))
-    ->schema([
-     Forms\Components\FileUpload::make('image')
-    ->label(__('filament/admin/product_resource.image'))
-    ->disk('public')
-    ->directory('products')
-    ->visibility('public')
-    ->preserveFilenames() // عشان يحفظ الاسم زي ما هو وميحتارش
-    ->afterStateUpdated(fn ($state) => $state === null) // تنظيف الحالة لو اتمسحت
-    ->dehydrated(fn ($state) => filled($state))
-    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-    ->rules(['required','mimes:jpg,jpeg,jfif,png,webp','max:2048'])
-    ]),
+                    ->schema([
+                        Forms\Components\FileUpload::make('image')
+                            ->label(__('filament/admin/product_resource.image'))
+                            ->disk('public')
+                            ->directory('products')
+                            ->visibility('public')
+                            ->preserveFilenames() 
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->rules(['required','mimes:jpg,jpeg,jfif,png,webp','max:2048'])
+                    ]),
             ]);
     }
 
@@ -138,14 +134,16 @@ class ProductResource extends Resource
         return [];
     }
 
+    // 🚀 التعديل السحري هنا: كتبنا الـ Namespaces كاملة ومباشرة لكل صفحة عشان نمنع الـ Uri Conflict
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProducts::route('/'),
-            'create' => Pages\CreateProduct::route('/create'),
-            'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'index' => \Modules\Catalog\app\Filament\Resources\ProductResource\Pages\ListProducts::route('/'),
+            'create' => \Modules\Catalog\app\Filament\Resources\ProductResource\Pages\CreateProduct::route('/create'),
+            'edit' => \Modules\Catalog\app\Filament\Resources\ProductResource\Pages\EditProduct::route('/{record}/edit'),
         ];
     }
+
     public static function getNavigationLabel(): string
     {
         return __('filament/admin/product_resource.navigation_label');
@@ -160,5 +158,4 @@ class ProductResource extends Resource
     {
         return __('filament/admin/product_resource.plural_model_label');
     }
-
 }

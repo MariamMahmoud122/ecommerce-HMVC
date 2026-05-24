@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
       Paginator::useBootstrapFive();
      LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
-            $switch->locales(['ar', 'en']); // اللغات اللي عاوزاها تظهر
+            $switch->locales(['ar', 'en', 'el']); // اللغات اللي عاوزاها تظهر
         });
     }
 }
