@@ -34,6 +34,26 @@ class CatalogServiceProvider extends ModuleServiceProvider
         RouteServiceProvider::class,
     ];
 
+    public function boot(): void
+    {
+        // تشغيل الـ boot الأصلي بتاع الحزمة
+        parent::boot();
+
+        // لو إحنا جوه الـ Testbench (بيئة الـ Testing)، نلقم الملفات يدويًا
+        if ($this->app->runningInConsole() && app()->environment('testing')) {
+            // شحن الـ Routes (تأكدي من حالة الأحرف للفولدر Routes أو routes)
+            if (file_exists(__DIR__ . '/../routes/web.php')) {
+                $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            } elseif (file_exists(__DIR__ . '/../Routes/web.php')) {
+                $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+            }
+
+            // شحن الـ Migrations
+            if (is_dir(__DIR__ . '/../database/migrations')) {
+                $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+            }
+        }
+    }
     /**
      * Define module schedules.
      * 
