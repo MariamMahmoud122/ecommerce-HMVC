@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Blade;
 //  use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 // use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
-
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 class AdminPanelProvider extends PanelProvider
 {
     
@@ -89,6 +89,8 @@ class AdminPanelProvider extends PanelProvider
                     ['code' => 'ar', 'name' => 'العربية', 'flag' => 'eg'],
                       ['code' => 'el', 'name' => 'Greek', 'flag' => 'gr'],
                 ]),
+
+        FilamentShieldPlugin::make(),
         ])
 
 

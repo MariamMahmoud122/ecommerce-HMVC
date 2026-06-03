@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Forms\Components\Select;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -31,22 +31,36 @@ class UserResource extends Resource
         ->schema([
             \Filament\Forms\Components\TextInput::make('name')
                 ->required(),
+                
             \Filament\Forms\Components\TextInput::make('email')
                 ->email()
                 ->required(),
+                
             \Filament\Forms\Components\TextInput::make('password')
-                ->password() // بيخلي النوع باسورد
-                ->revealable() // <--- ده السحر! بيعمل زرار العين عشان تشوفي الكلمة وانتي بتكتبيها
-                ->required(fn (string $operation): bool => $operation === 'create') // مطلوب فقط عند الإنشاء
-                ->dehydrated(fn ($state) => filled($state)) // ميغيرش الباسورد لو سيبتيه فاضي في التعديل
+                ->password() 
+                ->revealable() 
+                ->required(fn (string $operation): bool => $operation === 'create') 
+                ->dehydrated(fn ($state) => filled($state)) 
                 ->label(__('filament/admin/user_resource.password')),
+                
             \Filament\Forms\Components\Select::make('role')
-                    ->label(__('filament/admin/user_resource.role'))
+                ->label(__('filament/admin/user_resource.role'))
                 ->options([
                     1 => 'Admin',
                     0 => 'Customer',
                 ])
                 ->required(),
+
+            // 🚀 الحقل السحري بعد تنظيف التكرار وربطه بالـ Guard المظبوط
+            Select::make('permissions')
+                ->multiple() 
+                ->preload() 
+                ->searchable() // يخليكي تبحثي جوه الـ 58 صلاحية بسهولة
+                ->relationship('permissions', 'name', modifyQueryUsing: function ($query) {
+                    // بنجيب صلاحيات الـ web فقط عشان تظهر اللستة كاملة ومنظمة
+                    return $query->where('guard_name', 'web'); 
+                })
+                ->label('صلاحيات إضافية مستقلة للمسخدم'),
         ]);
 }
 

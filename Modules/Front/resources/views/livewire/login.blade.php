@@ -28,7 +28,13 @@
                     @error('password') <span class="text-danger small fw-bold">{{ $message }}</span> @enderror
                 </div>
 
-         
+                <!-- زرار تسجيل الدخول بجوجل -->
+<div class="mt-4">
+    <a href="{{ url('auth/google/redirect') }}" class="btn btn-google" style="background-color: #df4a32; color: white; padding: 10px; display: inline-block; text-decoration: none; border-radius: 5px;">
+        <i class="fab fa-google"></i>login with google Account
+    </a>
+</div>
+
                 <div class="mb-4 form-check">
                     <input type="checkbox" class="form-check-input border-dark shadow-none" id="remember" wire:model="remember">
                     <label class="form-check-label small" for="remember" style="color: #333; cursor: pointer;">Remember me</label>

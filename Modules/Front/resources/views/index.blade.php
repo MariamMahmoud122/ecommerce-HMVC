@@ -1,14 +1,14 @@
 <x-front::layouts.master>
     <div class="container mt-5">
         <div class="text-center mb-5">
-            <h1 class="fw-bold" style="color: #800020;">Welcome to Our Watch Store</h1>
+            <h1 class="fw-bold" style="color: #800020;">Welcome to Our Store</h1>
             <p class="text-muted">Discover the finest timepieces in one place.</p>
         </div>
 
         <div class="row g-4">
             @forelse($products as $product)
                 <div class="col-md-3 mb-4">
-                    {{-- بينادي على الكارت اللي جوه الموديول --}}
+                   
                     <x-front::product-card :product="$product" />
                 </div>
             @empty
